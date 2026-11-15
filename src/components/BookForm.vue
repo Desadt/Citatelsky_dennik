@@ -23,7 +23,7 @@
       <textarea v-model="form.note" rows="3" class="form-control"></textarea>
     </div>
     <div class="mb-3">
-        <label class="form-label">URL obrázka obalu (Obrázok nájdite ideálne na 
+        <label class="form-label">(Volitelné)URL obrázka obalu (Obrázok nájdite ideálne na 
             <a href="https://openlibrary.org/" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Open Library</a>)
         </label>
         <input v-model="form.cover" type="url" class="form-control" placeholder="https://..." />
