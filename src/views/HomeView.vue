@@ -1,7 +1,7 @@
 <script setup>
 import { useBooksStore } from '@/stores/books'
 import BookCard from '@/components/BookCard.vue'
-import StatCard from '@/components/StatCard.vue'
+import StatCard from '@/components/StatCard.vue';
 
 const store = useBooksStore()
 </script>

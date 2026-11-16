@@ -62,12 +62,7 @@ function remove() {
     </div>
 
     <div v-if="book.status !== 'to-read'" class="mb-3">
-      <ProgressBar
-        class="mb-2"
-        :value="store.pagesReadOf(book)"
-        :max="book.pages"
-        label="Prečítané strany"
-      />
+      <ProgressBar class="mb-2" :value="store.pagesReadOf(book)" :max="book.pages" label="Prečítané strany"/>
       <label class="form-label">
         Aktuálna strana: {{ store.pagesReadOf(book) }} / {{ book.pages }}
       </label>
@@ -84,10 +79,7 @@ function remove() {
 
     <div class="mb-3">
       <p class="form-label mb-1">Hodnotenie</p>
-      <StarRating
-        :model-value="book.rating"
-        @update:model-value="store.updateBook(book.id, { rating: $event })"
-      />
+      <StarRating :model-value="book.rating" @update:model-value="store.updateBook(book.id, { rating: $event })"/>
     </div>
 
     <div class="mb-3">
