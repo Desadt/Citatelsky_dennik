@@ -4,7 +4,6 @@ import initialBooks from '@/data/books.json'
 
 const STORAGE_KEY = 'citatelsky-dennik-knihy'
 
-// Doplní chýbajúce polia, aby staré dáta z localStorage fungovali s novou verziou
 function normalize(book) {
   return { rating: 0, note: '', currentPage: 0, cover: '', ...book }
 }
@@ -14,13 +13,11 @@ function loadBooks() {
     const saved = localStorage.getItem(STORAGE_KEY)
     if (saved) return JSON.parse(saved).map(normalize)
   } catch {
-    // poškodené dáta v localStorage – použijeme počiatočné
   }
   return structuredClone(initialBooks).map(normalize)
 }
 
 export const useBooksStore = defineStore('books', () => {
-  // ----- stav -----
   const books = ref(loadBooks())
   const filters = ref({ search: '', status: 'all' })
 
@@ -30,18 +27,15 @@ export const useBooksStore = defineStore('books', () => {
     { deep: true }
   )
 
-  // ----- pomocné funkcie -----
   function getBookById(id) {
     return books.value.find((b) => b.id === id)
   }
 
-  // Počet prečítaných strán u jednej knihy
   function pagesReadOf(book) {
     if (book.status === 'finished') return book.pages
     return Math.min(book.currentPage, book.pages)
   }
 
-  // ----- computed -----
   const finishedBooks = computed(() =>
     books.value.filter((b) => b.status === 'finished')
   )
@@ -59,7 +53,6 @@ export const useBooksStore = defineStore('books', () => {
     )
   })
 
-  // Celkový počet prečítaných strán vo všetkých knihách
   const pagesRead = computed(() =>
     books.value.reduce((acc, b) => acc + pagesReadOf(b), 0)
   )
@@ -75,7 +68,6 @@ export const useBooksStore = defineStore('books', () => {
     }
   })
 
-  // ----- akcie -----
   function addBook(data) {
     books.value.push(normalize({ id: String(Date.now()), ...data }))
   }
@@ -85,7 +77,6 @@ export const useBooksStore = defineStore('books', () => {
     if (book) Object.assign(book, patch)
   }
 
-  // Zmena stavu: pri "Prečítané" sa aktuálna strana nastaví na koniec knihy
   function setStatus(id, status) {
     const book = getBookById(id)
     if (!book) return
@@ -93,7 +84,6 @@ export const useBooksStore = defineStore('books', () => {
     if (status === 'finished') book.currentPage = book.pages
   }
 
-  // Nastavenie aktuálnej strany, hodnota sa ohraničí na rozsah knihy
   function setCurrentPage(id, page) {
     const book = getBookById(id)
     if (!book) return
